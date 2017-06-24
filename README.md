@@ -12,12 +12,28 @@ You need to have a Heroku account and the
 
 ## Getting Started
 
-Create and deploy:
+* Fork this repo.
+* Configure [Travis](https://travis-ci.org) to build the new repo.
+* Create your Heroku app:
 
 ```bash
 heroku apps:create my-awesome-app
-git push heroku master
 ```
+
+* Update the `app` entry in .travis.yml
+* Update the deployment credentials
+
+```bash
+travis encrypt $(heroku auth:token) --add deploy.api_key
+```
+
+* Commit and push your changes to GitHub:
+
+```bash
+commit -am"Update travis config"
+git push origin master
+```
+
 
 ## Running it locally
 
@@ -30,9 +46,8 @@ heroku local web
 
 The app will be available on [http://localhost:5000](http://localhost:5000)
 
-## Deploying using TravisCI
+## Deploying it manually
 
-* Fork this repo 
-* Change the `heroku` section in .travis.yml to use your app and api_key
-* Add Travis to your new repo
-
+```bash
+git push heroku master
+```
