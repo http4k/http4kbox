@@ -30,7 +30,7 @@ travis encrypt $(heroku auth:token) --add deploy.api_key
 * Commit and push your changes to GitHub:
 
 ```bash
-commit -am"Update travis config"
+git commit -am"Update travis config"
 git push origin master
 ```
 
