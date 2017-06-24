@@ -6,9 +6,9 @@ This application gets deployed to Heroku on every push to GitHub
 
 ## Pre-requisites
 
-You need to have a Heroku account and the 
-[Heroku Toolbelt](https://devcenter.heroku.com/articles/heroku-cli#download-and-install) to run some of the commands
- described below.
+You need to have installed:
+* [Heroku Toolbelt](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
+* [Travis CLI](https://github.com/travis-ci/travis.rb#installation)
 
 ## Getting Started
 
