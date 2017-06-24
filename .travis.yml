@@ -1,0 +1,12 @@
+language: java
+jdk:
+- oraclejdk8
+cache:
+  directories:
+  - "$HOME/.m2"
+  - "$HOME/.gradle"
+deploy:
+  provider: heroku
+  app: http4k-example-app
+  api_key:
+    secure: BDX/XWd4pkn4+vJkT9gDBgZtzTB8RLZBr33LvmPNj34cfQHL9Vouu85w1dssoTO5HD7HLOVZ3tUhz9tTcRPjqGzbN/hEcviXqfdvf71RsqRtA5apFrl1/4jZprPIM4zaJq8IX5bK3w8YmjAhHn5xLvrfqWX1XXFM4ncZqdfUnB7UNt9UxtMKFQaf96HIasV46TQ050hwkUzlWU0Urtusnv9poV/Q4eY1Y1ykwiAJxHvBDYL93b5VnOqaj6jaYeOKQeFJZwFBaUeOJMdY1GB6nxQtJR5jgU3vnKrO915hgGJBPV4Odd8GDNyRgGZzpFmse9p+i1ZDbXCxynVAwx6Pf/3GauXAxhXXUBOA9f39lPIXrrnUr99g6g89jgA2OhO1+a2N2BJpiF4Cub4gzCu0T4yzKIUbwMXYwHjkNznEUj4IXVE/z7XNum2q7J02vKBwZyzDUKzrihN5tAc+wXR3jp5UAV59unr/67neQoQ1in5UbkYJ4PpWHcPuOeCNgFoTJ8jDvIdpVhhgzs3U5BqcG/kWNA0mzP34ChcKQbrErws9+C/PPPcXIVwDEzMPOUxYVYcVL7hWCIaMUVg8mqGil9PbzOM+DbsxPoVvE3HzdeE2plLq/+vJ1pkk/xncNBDffZZjR9TuvsckzSt6+9btWUKa7mL0I+4ygp4GfwoIgu4=
