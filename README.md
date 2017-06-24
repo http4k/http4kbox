@@ -12,8 +12,8 @@ You need to have installed:
 
 ## Getting Started
 
-* Fork this repo.
-* Configure [Travis](https://travis-ci.org) to build the new repo.
+* Fork this repo
+* Configure [Travis](https://travis-ci.org) to build the new repo
 * Create your Heroku app:
 
 ```bash
@@ -33,7 +33,6 @@ travis encrypt $(heroku auth:token) --add deploy.api_key
 commit -am"Update travis config"
 git push origin master
 ```
-
 
 ## Running it locally
 
