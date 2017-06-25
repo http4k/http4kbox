@@ -34,6 +34,8 @@ git commit -am"Update travis config"
 git push origin master
 ```
 
+This will automatically trigger a new build and deployment of your app.
+
 ## Running it locally
 
 Run:
