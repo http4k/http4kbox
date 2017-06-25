@@ -38,8 +38,6 @@ This will automatically trigger a new build and deployment of your app.
 
 ## Running it locally
 
-Run:
-
 ```bash
 ./gradlew stage
 heroku local web
