@@ -13,7 +13,7 @@ import org.http4k.server.asServer
 fun main(args: Array<String>) {
     val port = if (args.isNotEmpty()) args[0].toInt() else 5000
 
-    val app = routes("/" to GET bind { _: Request -> Response(OK).body("Hello World!") })
+    val app = routes("/" bind GET to { _: Request -> Response(OK).body("Hello World!") })
 
     app.asServer(Jetty(port)).startAndBlock()
 }
