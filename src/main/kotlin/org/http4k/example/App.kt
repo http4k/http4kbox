@@ -15,5 +15,5 @@ fun main(args: Array<String>) {
 
     val app = routes("/" bind GET to { _: Request -> Response(OK).body("Hello World!") })
 
-    app.asServer(Jetty(port)).startAndBlock()
+    app.asServer(Jetty(port)).start().block()
 }
