@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+../gradlew clean shadowJar
+
+./graalvm/Contents/Home/bin/native-image \
+    -H:+ReportUnsupportedElementsAtRuntime \
+    -H:IncludeResources=.*http4k.* \
+    -J-Xms3G -J-Xmx4G --no-server \
+    -jar build/libs/native.jar

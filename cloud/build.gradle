@@ -1,0 +1,8 @@
+dependencies {
+    compile project(":app")
+}
+
+apply plugin: 'application'
+mainClassName = "http4kbox.CloudServerKt"
+
+task stage(dependsOn: ['installDist'])

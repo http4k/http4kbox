@@ -1,0 +1,1 @@
+web: build/install/cloud/bin/cloud $PORT
