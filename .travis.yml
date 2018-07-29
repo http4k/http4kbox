@@ -23,7 +23,7 @@ matrix:
       language: java
       jdk: oraclejdk8
       script:
-      - "./gradlew -i clean cloud:installDist && rm -rf build && mv cloud/build . && mv cloud/Procfile . && git add Procfile && git commit 'adding procfile'"
+      - "./gradlew -i clean cloud:installDist && rm -rf build && mv cloud/build . && mv cloud/Procfile . && git add Procfile && git commit -am 'adding procfile'"
       cache:
         directories:
         - "$HOME/.m2"
