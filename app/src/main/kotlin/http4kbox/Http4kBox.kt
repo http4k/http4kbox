@@ -2,6 +2,7 @@ package http4kbox
 
 import io.github.konfigur8.Configuration
 import org.http4k.core.Body
+import org.http4k.core.ContentType.Companion.OCTET_STREAM
 import org.http4k.core.ContentType.Companion.TEXT_HTML
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method.GET
@@ -12,6 +13,7 @@ import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Status.Companion.OK
 import org.http4k.core.Status.Companion.SEE_OTHER
 import org.http4k.core.with
+import org.http4k.lens.Header.Common.CONTENT_TYPE
 import org.http4k.lens.MultipartFormFile
 import org.http4k.lens.Path
 import org.http4k.lens.Validator.Strict
@@ -48,7 +50,7 @@ object Get {
     private val id = Path.map(::S3Key).of("id")
 
     operator fun invoke(s3: S3) = { req: Request ->
-        s3[id(req)]?.let { Response(OK).header("Content-Type", "application/octet-stream").body(it) } ?: Response(NOT_FOUND)
+        s3[id(req)]?.let { Response(OK).with(CONTENT_TYPE of OCTET_STREAM).body(it) } ?: Response(NOT_FOUND)
     }
 }
 
