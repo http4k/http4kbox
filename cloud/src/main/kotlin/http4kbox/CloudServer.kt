@@ -8,15 +8,15 @@ import org.http4k.filter.ServerFilters.BasicAuth
 import org.http4k.server.SunHttp
 import org.http4k.server.asServer
 
-fun main(args: Array<String>) {
-    val CREDENTIALS = Property("CREDENTIALS", String::toCredentials)
+// since we are running in a public environment, add credentials to the app
+val BASIC_AUTH_CREDENTIALS = Property("BASIC_AUTH_CREDENTIALS", String::toCredentials)
 
-    // since we are running in a public environment, add credentials to the app
-    val config = Settings.defaults.requiring(CREDENTIALS).reify()
+fun main(args: Array<String>) {
+    val config = Settings.defaults.requiring(BASIC_AUTH_CREDENTIALS).reify()
 
     val port = if (args.isNotEmpty()) args[0].toInt() else 5000
 
-    BasicAuth("http4k", config[CREDENTIALS])
+    BasicAuth("http4k", config[BASIC_AUTH_CREDENTIALS])
             .then(Http4kBox(config, JavaHttpClient()))
             .asServer(SunHttp(port)).start().block()
 }
