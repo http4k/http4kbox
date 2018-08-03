@@ -5,7 +5,7 @@ services:
     container_name: proxy
     image: djfaze/port-forward
     ports:
-      - "8080:80"
+      - "80:80"
     environment:
       - REMOTE_HOST=7b33087a-5447-491a-8b82-cd2ec2f45153.s3.amazonaws.com
       - REMOTE_PORT=443
@@ -14,7 +14,7 @@ services:
     container_name: http4kbox
     image: daviddenton/http4kbox-native
     ports:
-      - "5000:10000"
+      - "10000:10000"
     links:
        - proxy
     env_file:
