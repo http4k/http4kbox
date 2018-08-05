@@ -9,7 +9,7 @@ import org.http4k.aws.AwsCredentials
 object Settings {
     val AWS_CREDENTIALS = Property("AWS_CREDENTIALS", String::toAwsCredentials, AwsCredentials::fromCredentials, Private)
     val AWS_BUCKET = Property.string("AWS_BUCKET")
-    val S3_CREDENTIAL_SCOPE = Property("S3_CREDENTIAL_SCOPE", { AwsCredentialScope(it, "s3") }, AwsCredentialScope::region)
+    val S3_CREDENTIAL_SCOPE = Property("S3_REGION", { AwsCredentialScope(it, "s3") }, AwsCredentialScope::region)
 
     val defaults = ConfigurationTemplate()
             .requiring(S3_CREDENTIAL_SCOPE)
