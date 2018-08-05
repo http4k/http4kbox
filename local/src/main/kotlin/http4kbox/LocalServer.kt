@@ -10,6 +10,6 @@ import org.http4k.server.asServer
 val HTTP_PORT = Property.int("HTTP_PORT")
 
 fun main(args: Array<String>) {
-    val config = Settings.defaults.withProp(HTTP_PORT, 10000).reify()
+    val config = Settings.defaults.withProp(HTTP_PORT, 8000).reify()
     Http4kBox(config, DebuggingFilters.PrintRequestAndResponse().then(JavaHttpClient())).asServer(Undertow(config[HTTP_PORT])).start().block()
 }
