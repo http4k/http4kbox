@@ -1,9 +1,11 @@
 FROM findepi/graalvm:native as builder
 WORKDIR /builder
 ADD ./build/libs/native.jar /builder/native.jar
+ADD ./reflectconfig.json /builder/reflectconfig.json
 
 RUN native-image \
      -H:+ReportUnsupportedElementsAtRuntime \
+     -H:ReflectionConfigurationFiles=reflectconfig.json \
      -H:IncludeResources=.*http4k.* \
      -J-Xms3G -J-Xmx4G --no-server \
      -jar native.jar

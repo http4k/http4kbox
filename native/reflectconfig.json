@@ -1,0 +1,14 @@
+[
+  {
+    "name" : "com.sun.crypto.provider.SunJCE",
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ]
+  },
+  {
+    "name" : "com.sun.crypto.provider.HmacCore$HmacSHA256",
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ]
+  }
+]
