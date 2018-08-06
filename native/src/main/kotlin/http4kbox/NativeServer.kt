@@ -16,12 +16,9 @@ fun main(args: Array<String>) {
 
     val httpViaProxy = Filter { next ->
         {
-            next(it.header("Host", it.uri.host)
-                    .uri(it.uri.copy(scheme = "http").host(config[PROXY_HOST])))
+            next(it.header("Host", it.uri.host).uri(it.uri.copy(scheme = "http").host(config[PROXY_HOST])))
         }
     }
 
-    val useLocalProxyForSsl = httpViaProxy.then(JavaHttpClient())
-
-    Http4kBox(config, useLocalProxyForSsl).asServer(ApacheServer(config[HTTP_PORT])).start().block()
+    Http4kBox(config, httpViaProxy.then(JavaHttpClient())).asServer(ApacheServer(config[HTTP_PORT])).start().block()
 }
