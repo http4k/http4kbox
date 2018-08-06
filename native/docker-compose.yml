@@ -3,7 +3,9 @@ version: '3'
 services:
   proxy:
     container_name: proxy
-    image: hope/redirect-http-to-https
+    build:
+      context: .
+      dockerfile: proxy.Dockerfile
     ports:
       - "80:80"
 
