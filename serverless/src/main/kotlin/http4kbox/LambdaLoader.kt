@@ -1,7 +1,7 @@
 package http4kbox
 
 import io.github.konfigur8.Property
-import org.http4k.client.JavaHttpClient
+import org.http4k.client.ApacheClient
 import org.http4k.core.Credentials
 import org.http4k.core.HttpHandler
 import org.http4k.core.then
@@ -16,7 +16,7 @@ object LambdaLoader : AppLoader {
         val config = Settings.defaults.requiring(CREDENTIALS).reify()
 
         return BasicAuth("http4k", config[CREDENTIALS])
-                .then(Http4kBox(config, JavaHttpClient()))
+                .then(Http4kBox(config, ApacheClient()))
     }
 }
 

@@ -1,7 +1,7 @@
 package http4kbox
 
 import io.github.konfigur8.Property
-import org.http4k.client.JavaHttpClient
+import org.http4k.client.ApacheClient
 import org.http4k.core.Credentials
 import org.http4k.core.then
 import org.http4k.filter.ServerFilters.BasicAuth
@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
     val port = if (args.isNotEmpty()) args[0].toInt() else 5000
 
     BasicAuth("http4k", config[BASIC_AUTH_CREDENTIALS])
-            .then(Http4kBox(config, JavaHttpClient()))
+            .then(Http4kBox(config, ApacheClient()))
             .asServer(SunHttp(port)).start().block()
 }
 

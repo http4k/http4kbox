@@ -3,12 +3,9 @@ version: '3'
 services:
   proxy:
     container_name: proxy
-    image: djfaze/port-forward
+    image: hope/redirect-http-to-https
     ports:
       - "80:80"
-    environment:
-      - REMOTE_HOST=7b33087a-5447-491a-8b82-cd2ec2f45153.s3.amazonaws.com
-      - REMOTE_PORT=443
 
   http4kbox:
     container_name: http4kbox
