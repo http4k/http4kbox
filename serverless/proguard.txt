@@ -9,6 +9,8 @@
 -dontwarn org.http4k.**
 -dontwarn com.fasterxml.**
 -dontwarn org.eclipse.jetty.**
+-dontwarn org.mozilla.javascript.**
+-dontwarn org.slf4j.**
 
 -keepclasseswithmembernames class * {
     native <methods>;
