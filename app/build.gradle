@@ -1,11 +1,11 @@
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile 'io.github.daviddenton:konfigur8:1.7.0'
+
     compile "org.http4k:http4k-aws:$http4k_version"
     compile "org.http4k:http4k-core:$http4k_version"
-    compile "org.http4k:http4k-server-apache:$http4k_version"
-    compile "org.http4k:http4k-template-handlebars:$http4k_version"
     compile "org.http4k:http4k-multipart:$http4k_version"
+    compile "org.http4k:http4k-template-handlebars:$http4k_version"
 
     testCompile "org.http4k:http4k-testing-hamkrest:$http4k_version"
     testCompile "com.natpryce:hamkrest:1.4.2.0"

@@ -12,6 +12,8 @@ val PROXY_HOST = Property.string("PROXY_HOST")
 val HTTP_PORT = Property.int("HTTP_PORT")
 
 fun main(args: Array<String>) {
+//    System.setProperty("sun.net.http.allowRestrictedHeaders", "true")
+
     val config = Settings.defaults.requiring(HTTP_PORT).requiring(PROXY_HOST).reify()
 
     val httpViaProxy = Filter { next ->
