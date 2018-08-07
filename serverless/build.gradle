@@ -1,6 +1,16 @@
-dependencies {
-    compile project(":app")
-    compile "org.http4k:http4k-serverless-lambda:$http4k_version"
+import proguard.gradle.ProGuardTask
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'net.sf.proguard:proguard-gradle:5.3.3'
+    }
 }
 
 apply plugin: 'application'
@@ -8,8 +18,56 @@ mainClassName = "http4kbox.LambdaLoader"
 apply plugin: 'com.github.johnrengelman.shadow'
 
 shadowJar {
-    baseName = project.name
+    baseName = "serverless"
     classifier = null
     version = null
     mergeServiceFiles()
 }
+
+task proguard(type: ProGuardTask, dependsOn: 'shadowJar') {
+    configuration 'proguard.txt'
+
+    injars "$buildDir/libs/serverless.jar"
+    outjars "$buildDir/libs/serverless-out.jar"
+
+    keep 'public class org.http4k.serverless.Handler { *; } '
+    keep 'public class http4kbox.LambdaLoader { *; } '
+    keep 'public class org.http4k.serverless.lambda.ApiGatewayProxyRequest { *; } '
+    keep 'public class org.http4k.serverless.lambda.ApiGatewayProxyResponse { *; } '
+
+    // why is this here?
+    whyareyoukeeping 'public class org.eclipse.jetty.util.log.Log'
+
+    libraryjars "${System.getProperty('java.home')}/lib/rt.jar"
+    libraryjars "${System.getProperty('java.home')}/lib/jce.jar"
+    libraryjars configurations.compileOnly
+}
+
+build.dependsOn proguard
+
+dependencies {
+    compile project(":app")
+    compile "org.http4k:http4k-serverless-lambda:$http4k_version"
+    testCompile "io.github.s4nchez:deployer:0.1-SNAPSHOT"
+}
+
+task deployLambda(type: JavaExec) {
+    main = 'org.http4k.serverless.lambda.LambdaFunction::handle'
+    environment "DEPLOYMENTSPEC_MODULE", project.name
+    environment "DEPLOYMENTSPEC_HANDLERFUNCTION", "http4kbox.Http4kboxLambda" // is this needed?
+    environment "HTTP4K_BOOTSTRAP_CLASS", "http4kbox.Http4kboxLambda"
+    environment "CREDENTIALS", "http4kbox:http4kbox"
+
+    classpath += sourceSets.main.resources
+    classpath += sourceSets.test.compileClasspath
+}
+
+task deployApi(type: JavaExec) {
+    main = 'io.github.s4nchez.DeployApiKt'
+    environment "DEPLOYMENTSPEC_MODULE", project.name
+
+    classpath += sourceSets.main.resources
+    classpath += sourceSets.test.compileClasspath
+}
+
+//deployLambda.dependsOn build

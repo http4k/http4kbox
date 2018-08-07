@@ -8,15 +8,16 @@ import org.http4k.core.then
 import org.http4k.filter.ServerFilters.BasicAuth
 import org.http4k.serverless.AppLoader
 
-object LambdaLoader : AppLoader {
+object Http4kboxLambda : AppLoader {
+    // since we are running in a public environment, add credentials to the app
     private val CREDENTIALS = Property("CREDENTIALS", String::toCredentials)
 
     override fun invoke(env: Map<String, String>): HttpHandler {
-        // since we are running in a public environment, add credentials to the app
+        System.setProperties(env.toProperties())
+
         val config = Settings.defaults.requiring(CREDENTIALS).reify()
 
-        return BasicAuth("http4k", config[CREDENTIALS])
-                .then(Http4kBox(config, JavaHttpClient()))
+        return BasicAuth("http4k", config[CREDENTIALS]).then(Http4kBox(config, JavaHttpClient()))
     }
 }
 
