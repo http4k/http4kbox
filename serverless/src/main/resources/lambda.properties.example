@@ -1,0 +1,5 @@
+HTTP4K_BOOTSTRAP_CLASS=http4kbox.Http4kboxLambda
+CREDENTIALS=foo:bar
+AWS_BUCKET=my-bucket
+S3_REGION=us-east-1
+AWS_CREDENTIALS=
