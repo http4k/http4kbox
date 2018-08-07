@@ -31,7 +31,8 @@ task proguard(type: ProGuardTask, dependsOn: 'shadowJar') {
     outjars "$buildDir/libs/${project.name}-${version}-out.jar"
 
     keep 'public class org.http4k.serverless.Handler { *; } '
-//    keep 'public class org.http4k.serverless.lambda.LambdaFunction { *; } '
+    keep 'public class org.http4k.serverless.lambda.LambdaFunction { *; } '
+    keep 'public class http4kbox.Http4kboxLambda { *; } '
     keep 'public class http4kbox.LambdaLoader { *; } '
     keep 'public class org.http4k.serverless.lambda.ApiGatewayProxyRequest { *; } '
     keep 'public class org.http4k.serverless.lambda.ApiGatewayProxyResponse { *; } '
@@ -55,7 +56,7 @@ dependencies {
 task deployLambda(type: JavaExec) {
     main = 'io.github.s4nchez.DeployLambdaKt'
     environment "DEPLOYMENTSPEC_MODULE", project.name
-    environment "DEPLOYMENTSPEC_HANDLERFUNCTION", "http4kbox.Http4kboxLambda" // is this needed?
+    environment "DEPLOYMENTSPEC_HANDLERFUNCTION", "org.http4k.serverless.lambda.LambdaFunction::handle"
     environment "HTTP4K_BOOTSTRAP_CLASS", "http4kbox.Http4kboxLambda"
     environment "CREDENTIALS", "http4kbox:http4kbox"
 
