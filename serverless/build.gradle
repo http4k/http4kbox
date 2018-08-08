@@ -50,7 +50,7 @@ build.dependsOn proguard
 dependencies {
     compile project(":app")
     compile "org.http4k:http4k-serverless-lambda:$http4k_version"
-    testCompile "io.github.s4nchez:deployer:0.1-SNAPSHOT"
+//    testCompile "io.github.s4nchez:deployer:0.1-SNAPSHOT"
 }
 
 task deployLambda(type: JavaExec) {
