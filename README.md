@@ -1,6 +1,6 @@
 # http4kbox - http4k app deployed in multiple modes 
 
-This is a simple Dropbox clone built with [**http4k**](https://http4k.org) which uses S3 as a backing store, implemented in<100 lines of code (when imports are excluded). It is designed to demo that http4k apps run identically in the following modes:
+This is a simple Dropbox clone built with [**http4k**](https://http4k.org) which uses S3 as a backing store, implemented in ~70 lines of code (when imports are excluded). It is designed to demo that http4k apps run identically in the following modes:
 
 1. As a Kotlin function - see [app](./app)
 1. In a deployed local Undertow server + Apache HTTP client - see [local](./local)

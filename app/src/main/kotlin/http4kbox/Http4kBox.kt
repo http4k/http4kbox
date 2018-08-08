@@ -7,7 +7,6 @@ import org.http4k.core.ContentType.Companion.TEXT_HTML
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method.GET
 import org.http4k.core.Method.POST
-import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Status.Companion.OK
@@ -33,25 +32,22 @@ object Index {
     private val templates = HandlebarsTemplates().CachingClasspath()
     private val htmlBody = Body.string(TEXT_HTML).toLens()
 
-    operator fun invoke(s3: S3) = { _: Request ->
-        Response(OK).with(htmlBody of templates(ListFiles(s3.list())))
-    }
+    operator fun invoke(s3: S3): HttpHandler = { Response(OK).with(htmlBody of templates(ListFiles(s3.list()))) }
 }
 
 object Upload {
     private val files = MultipartFormFile.multi.required("file")
     private val form = Body.multipartForm(Strict, files).toLens()
 
-    operator fun invoke(s3: S3): HttpHandler = { req ->
-        files(form(req)).forEach { s3[S3Key(it.filename)] = it.content }
-        Response(SEE_OTHER).header("location", "/")
+    operator fun invoke(s3: S3): HttpHandler = {
+        files(form(it)).forEach { s3[S3Key(it.filename)] = it.content }.run { Response(SEE_OTHER).header("location", "/") }
     }
 }
 
 object Get {
     private val id = Path.map(::S3Key).of("id")
 
-    operator fun invoke(s3: S3) = { req: Request ->
+    operator fun invoke(s3: S3): HttpHandler = { req ->
         s3[id(req)]?.let { Response(OK).with(CONTENT_TYPE of OCTET_STREAM).body(it) } ?: Response(NOT_FOUND)
     }
 }
@@ -59,10 +55,7 @@ object Get {
 object Delete {
     private val id = Path.map(::S3Key).of("id")
 
-    operator fun invoke(s3: S3) = { req: Request ->
-        s3.delete(id(req))
-        Response(SEE_OTHER).header("location", "/")
-    }
+    operator fun invoke(s3: S3): HttpHandler = { s3.delete(id(it)).run { Response(SEE_OTHER).header("location", "/") } }
 }
 
 object Http4kBox {
@@ -72,10 +65,7 @@ object Http4kBox {
                 routes(
                         "/{id}/delete" bind POST to Delete(s3),
                         "/{id}" bind GET to Get(s3),
-                        "/" bind routes(
-                                POST to Upload(s3),
-                                GET to Index(s3)
-                        )
+                        "/" bind routes(POST to Upload(s3), GET to Index(s3))
                 )
         )
     }

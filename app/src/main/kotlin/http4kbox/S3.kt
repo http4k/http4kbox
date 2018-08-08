@@ -13,6 +13,7 @@ import org.http4k.core.Method.GET
 import org.http4k.core.Method.PUT
 import org.http4k.core.Request
 import org.http4k.core.Status
+import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Uri
 import org.http4k.core.then
 import org.http4k.filter.AwsAuth
@@ -32,38 +33,29 @@ class S3(private val aws: HttpHandler) {
 
     private val listFiles = Body.string(APPLICATION_XML).map(S3Key.Companion::parseFiles).toLens()
 
-    fun list(): List<S3Key> = aws(Request(GET, "/")).run {
-        if (status.successful) listFiles(this) else throw S3Error(status)
-    }
+    fun list(): List<S3Key> = aws(Request(GET, "/")).let(listFiles)
 
     operator fun get(file: S3Key): InputStream? = aws(Request(GET, "/${file.value}")).run {
-        when {
-            status.successful -> body.stream
-            status == Status.NOT_FOUND -> null
-            else -> throw S3Error(status)
-        }
+        if (status.successful) body.stream else null
     }
 
-    operator fun set(file: S3Key, content: InputStream) {
-        aws(Request(PUT, "/${file.value}").body(content)).run {
-            if (!status.successful) throw S3Error(status)
-        }
-    }
+    operator fun set(file: S3Key, content: InputStream) = aws(Request(PUT, "/${file.value}").body(content))
 
-    fun delete(file: S3Key) {
-        aws(Request(DELETE, "/${file.value}")).run {
-            if (!status.successful) throw S3Error(status)
-        }
-    }
+    fun delete(file: S3Key) = aws(Request(DELETE, "/${file.value}"))
 
     companion object {
         private fun SetBucketHost(uri: Uri) = Filter { next ->
             { next(it.uri(it.uri.scheme(uri.scheme).host(uri.host).port(uri.port))) }
         }
 
+        private val ensureSuccessful = Filter { next ->
+            { next(it).apply { if (!status.successful && status != NOT_FOUND) throw S3Error(status) } }
+        }
+
         fun configured(config: Configuration, http: HttpHandler) =
                 S3(SetBucketHost(Uri.of("https://${config[AWS_BUCKET]}.s3.amazonaws.com"))
                         .then(ClientFilters.AwsAuth(config[S3_CREDENTIAL_SCOPE], config[AWS_CREDENTIALS]))
+                        .then(ensureSuccessful)
                         .then(http))
     }
 }
