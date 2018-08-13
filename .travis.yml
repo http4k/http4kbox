@@ -8,6 +8,22 @@ cache:
     - $HOME/.gradle/wrapper/
 matrix:
   include:
+    - stage: cloud
+      language: java
+      jdk: oraclejdk8
+      script:
+      - "./gradlew -i clean cloud:stage"
+      cache:
+        directories:
+        - "$HOME/.m2"
+        - "$HOME/.gradle"
+      before_deploy:
+        - cd ./cloud/build
+      deploy:
+        provider: heroku
+        app: http4kbox
+        api_key:
+          secure: c9/G7MJj6VkZCq68gyn6ixIxqwVn9szfQ3JBhNacZcOTn/wqLoaZae5bDgPWeudE1xsBkgq6pOOQsrRHk9eDIT2upyAEsRmaBJnJN8US3Eah1qCr/fzmlAZfzRAFBDukHpO7BCF0joOIUZg59N80R/vuVeCkyBVlrBLiLsomhRej5YBbx2a0O6DJmZ/ERJmAkWmcAUFm+YezU95US7xOzuUAmBG0b8Z1GEHil7SolG9RxZtcH7JMjEjr2dtPAi6VGVMs2FC9gMwDIlTpRqENKovIiKGXcwsros/F33VelfQ4uP6kE9TZDInigeAEFsD+vFYJ58K28zBRJRjE4Cc2V5X8bI8nRIuWEy5TM2QZgSdX6Y9RN7VK25gZ+ktyciwj7/JdO8Aewx9QywLX7T7j/akzbsQqeUE8CcyTtUATtbUrCzm32OKcjp/syZmFyFo8y/kNLAs7/Zz1LEDWGLaaSDqp5ubxxqqzUqVLYIOCgNG7FkjiqIpqwWnLMxvH05LU9zFRnNw4eIba/9d40IGqRa+cTAO5HXUP8O8OPKyJNQ0bVRllPMJeEonx5rrRPb3fezBMCSTaqwhTXGlkApDrOmkgaxYUl2rHBke4NWXvCGgj4acCnouUlsVeNaRaD3C2yteh9RyL3lITxv/4HDo6Ivm22+YecjOW3h5YFVH/zr0=
     - stage: build
       language: java
       jdk: oraclejdk8
@@ -28,22 +44,6 @@ matrix:
         directories:
         - "$HOME/.m2"
         - "$HOME/.gradle"
-    - stage: cloud
-      language: java
-      jdk: oraclejdk8
-      script:
-      - "./gradlew -i clean cloud:stage"
-      cache:
-        directories:
-        - "$HOME/.m2"
-        - "$HOME/.gradle"
-      before_deploy:
-        - cd ./cloud/build
-      deploy:
-        provider: heroku
-        app: http4kbox
-        api_key:
-          secure: c9/G7MJj6VkZCq68gyn6ixIxqwVn9szfQ3JBhNacZcOTn/wqLoaZae5bDgPWeudE1xsBkgq6pOOQsrRHk9eDIT2upyAEsRmaBJnJN8US3Eah1qCr/fzmlAZfzRAFBDukHpO7BCF0joOIUZg59N80R/vuVeCkyBVlrBLiLsomhRej5YBbx2a0O6DJmZ/ERJmAkWmcAUFm+YezU95US7xOzuUAmBG0b8Z1GEHil7SolG9RxZtcH7JMjEjr2dtPAi6VGVMs2FC9gMwDIlTpRqENKovIiKGXcwsros/F33VelfQ4uP6kE9TZDInigeAEFsD+vFYJ58K28zBRJRjE4Cc2V5X8bI8nRIuWEy5TM2QZgSdX6Y9RN7VK25gZ+ktyciwj7/JdO8Aewx9QywLX7T7j/akzbsQqeUE8CcyTtUATtbUrCzm32OKcjp/syZmFyFo8y/kNLAs7/Zz1LEDWGLaaSDqp5ubxxqqzUqVLYIOCgNG7FkjiqIpqwWnLMxvH05LU9zFRnNw4eIba/9d40IGqRa+cTAO5HXUP8O8OPKyJNQ0bVRllPMJeEonx5rrRPb3fezBMCSTaqwhTXGlkApDrOmkgaxYUl2rHBke4NWXvCGgj4acCnouUlsVeNaRaD3C2yteh9RyL3lITxv/4HDo6Ivm22+YecjOW3h5YFVH/zr0=
     - stage: native
       language: java
       jdk: oraclejdk8
