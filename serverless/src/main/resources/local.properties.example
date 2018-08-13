@@ -1,0 +1,5 @@
+AwsConfiguration.accessKey=
+AwsConfiguration.secretKey=
+AwsConfiguration.region=us-east-1
+AwsConfiguration.accountId=
+DeploymentSpec.lambdaRuntimeRole=my-role # not an arn, just the role name
