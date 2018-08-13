@@ -32,13 +32,13 @@ matrix:
       language: java
       jdk: oraclejdk8
       script:
-      - "./gradlew -i clean cloud:installDist"
+      - "./gradlew -i clean cloud:stage"
       cache:
         directories:
         - "$HOME/.m2"
         - "$HOME/.gradle"
       before_deploy:
-        - cd ./cloud
+        - cd ./cloud/build
       deploy:
         provider: heroku
         app: http4kbox
