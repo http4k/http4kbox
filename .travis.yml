@@ -12,14 +12,13 @@ matrix:
       language: java
       jdk: oraclejdk8
       script:
-      - "./gradlew -i clean cloud:stage"
+        - "./gradlew -i clean cloud:stage && mv cloud/build/install build && cp cloud/Procfile ."
       cache:
         directories:
         - "$HOME/.m2"
         - "$HOME/.gradle"
-      before_deploy:
-        - cd ./cloud/build
       deploy:
+        skip_cleanup: true
         provider: heroku
         app: http4kbox
         api_key:
