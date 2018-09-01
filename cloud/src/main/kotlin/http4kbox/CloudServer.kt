@@ -5,7 +5,7 @@ import org.http4k.client.JavaHttpClient
 import org.http4k.core.Credentials
 import org.http4k.core.then
 import org.http4k.filter.ServerFilters.BasicAuth
-import org.http4k.server.Jetty
+import org.http4k.server.ApacheServer
 import org.http4k.server.asServer
 
 // since we are running in a public environment, add credentials to the app
@@ -18,7 +18,7 @@ fun main(args: Array<String>) {
 
     BasicAuth("http4k", config[BASIC_AUTH_CREDENTIALS])
             .then(Http4kBox(config, JavaHttpClient()))
-            .asServer(Jetty(port)).start().block()
+            .asServer(ApacheServer(port)).start().block()
 }
 
 private fun String.toCredentials() = split(":").run { Credentials(get(0), get(1)) }
