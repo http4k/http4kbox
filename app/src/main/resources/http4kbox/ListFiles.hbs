@@ -1,5 +1,5 @@
 <head>
-    <title>http4k Box!</title>
+    <title>http4kbox</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/min/dropzone.min.css" integrity="sha256-e47xOkXs1JXFbjjpoRr1/LhVcqSzRmGmPqsrUQeVs+g=" crossorigin="anonymous"/>
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -19,6 +19,10 @@
             vertical-align: bottom;
         }
 
+        .text {
+            max-width: 50%;
+        }
+
         .upload {
             float: right;
         }
@@ -28,7 +32,7 @@
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="/">http4k Box</a>
+    <a class="navbar-brand" href="https://github.com/http4k/http4kbox">Github</a>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto"></ul>
@@ -41,7 +45,10 @@
     </form>
 </span>
 <div>
-    <h3>Files:</h3>
+    <h2>http4kbox</h2>
+    <p class="text">This is a simple Dropbox clone written using <a href="https://http4k.org">http4k</a>, backed by an
+        <a href="https://aws.amazon.com/s3">S3</a> bucket and continually deployed to <a href="https://heroku.com">Heroku</a> via a  <a href="https://travis.org">Travis</a> pipeline.
+    </p>
     <table class="table table-striped">
         <thead>
         <tr>
