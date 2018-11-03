@@ -1,20 +1,16 @@
 package http4kbox
 
 import io.github.konfigur8.Configuration
-import org.http4k.core.Body
+import org.http4k.core.*
 import org.http4k.core.ContentType.Companion.OCTET_STREAM
 import org.http4k.core.ContentType.Companion.TEXT_HTML
-import org.http4k.core.HttpHandler
 import org.http4k.core.Method.GET
 import org.http4k.core.Method.POST
-import org.http4k.core.Response
 import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Status.Companion.OK
 import org.http4k.core.Status.Companion.SEE_OTHER
-import org.http4k.core.then
-import org.http4k.core.with
 import org.http4k.filter.ServerFilters.CatchAll
-import org.http4k.lens.Header.Common.CONTENT_TYPE
+import org.http4k.lens.Header.CONTENT_TYPE
 import org.http4k.lens.MultipartFormFile
 import org.http4k.lens.Path
 import org.http4k.lens.Validator.Strict

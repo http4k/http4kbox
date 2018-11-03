@@ -1,6 +1,6 @@
 rootProject.name = 'http4kbox'
 include 'app'
-include 'cloud'
+include 'heroku'
 include 'local'
 include 'serverless'
 include 'native'

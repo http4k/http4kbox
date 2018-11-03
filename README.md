@@ -4,16 +4,19 @@ This is a simple Dropbox clone built with [**http4k**](https://http4k.org) which
 
 1. As a Kotlin function with SunHttp dev server for tests - see [app](./app)
 1. In a deployed local Undertow server + Apache HTTP client - see [local](./local)
-1. As a cloud-based Apache server (with Java HTTP client) deployed to Heroku through a fully CD pipeline run on Travis - see [cloud](./cloud)
+1. To Heroku as a cloud-based Apache server (with Java HTTP client) deployed through a fully CD pipeline run on Travis - see [heroku](./heroku)
+1. Into a Kubernetes cluster - see [k8s](./k8s)
 1. As a pure Kotlin function deployed in a Serverless environment (AWS Lambda) - see [serverless](./serverless)
 1. As a native Apache server binary running in GraalVM - see [native](./native)
 
 Apart from the switchable server backends and clients, the core app uses the following [**http4k**](https://http4k.org) modules and features:
 
 - `http4k-core` <-- main HTTP library
+- `http4k-cloudnative` <-- for 12-factor configuration via environmental properties
 - `http4k-aws` <-- replaces the Java AWS SDK
 - `http4k-template-handlebars` <-- for templating
 - `http4k-multipart` <-- multipart form uploads
+- `http4k-testing-hamkrest` <-- for test assertions
 
 ## In action:
 

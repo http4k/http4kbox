@@ -4,6 +4,6 @@ dependencies {
 }
 
 apply plugin: 'application'
-mainClassName = "http4kbox.CloudServerKt"
+mainClassName = "http4kbox.HerokuServerKt"
 
 task stage(dependsOn: ['installDist'])
