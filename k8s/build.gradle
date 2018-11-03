@@ -5,5 +5,11 @@ dependencies {
 
 apply plugin: 'application'
 mainClassName = "http4kbox.K8sServerKt"
+apply plugin: 'com.github.johnrengelman.shadow'
 
-task stage(dependsOn: ['installDist'])
+shadowJar {
+    baseName = project.name
+    classifier = null
+    version = null
+    mergeServiceFiles()
+}
