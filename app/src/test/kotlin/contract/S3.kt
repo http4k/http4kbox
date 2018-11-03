@@ -9,9 +9,8 @@ import env.TestSettings
 import http4kbox.S3
 import http4kbox.S3Error
 import http4kbox.S3Key
-import http4kbox.Settings
-import io.github.konfigur8.Configuration
 import org.http4k.client.JavaHttpClient
+import org.http4k.cloudnative.env.Environment
 import org.http4k.core.HttpHandler
 import org.http4k.core.Response
 import org.http4k.core.Status.Companion.INTERNAL_SERVER_ERROR
@@ -20,18 +19,18 @@ import org.http4k.core.then
 import org.http4k.filter.DebuggingFilters
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import java.util.UUID
+import java.util.*
 
-abstract class S3Contract(http: HttpHandler, protected val config: Configuration) {
+abstract class S3Contract(http: HttpHandler, protected val env: Environment) {
 
     private val TEST_KEY = S3Key(UUID.randomUUID().toString())
     private val CONTENT = "hello!"
 
-    private val s3 = S3.configured(config, http)
+    private val s3 = S3.configured(env, http)
 
     @Test
     fun `get unknown file returns null`() {
-        assertThat(S3.configured(config) { Response(NOT_FOUND) }[S3Key("unknown")], absent())
+        assertThat(S3.configured(env) { Response(NOT_FOUND) }[S3Key("unknown")], absent())
     }
 
     @Test
@@ -72,7 +71,7 @@ class FakeS3Test : S3Contract(DebuggingFilters.PrintRequestAndResponse().then(Fa
 
     @Test
     fun `endpoints failing produce S3Error`() {
-        val errorProne = S3.configured(config) { Response(INTERNAL_SERVER_ERROR) }
+        val errorProne = S3.configured(env) { Response(INTERNAL_SERVER_ERROR) }
         assertThat({ errorProne[S3Key("unknown")] }, throws<S3Error>())
         assertThat({ errorProne.delete(S3Key("unknown")) }, throws<S3Error>())
         assertThat({ errorProne.list() }, throws<S3Error>())
@@ -80,4 +79,4 @@ class FakeS3Test : S3Contract(DebuggingFilters.PrintRequestAndResponse().then(Fa
 }
 
 @Disabled("You need to set real S3 credentials in your ENV to run this")
-class RealS3Test : S3Contract(JavaHttpClient(), Settings.defaults.reify())
+class RealS3Test : S3Contract(JavaHttpClient(), Environment.ENV)

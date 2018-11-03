@@ -1,6 +1,6 @@
 package http4kbox
 
-import io.github.konfigur8.Configuration
+import org.http4k.cloudnative.env.Environment
 import org.http4k.core.*
 import org.http4k.core.ContentType.Companion.OCTET_STREAM
 import org.http4k.core.ContentType.Companion.TEXT_HTML
@@ -55,8 +55,8 @@ object Delete {
 }
 
 object Http4kBox {
-    operator fun invoke(config: Configuration, s3Http: HttpHandler): RoutingHttpHandler {
-        val s3 = S3.configured(config, s3Http)
+    operator fun invoke(env: Environment, s3Http: HttpHandler): RoutingHttpHandler {
+        val s3 = S3.configured(env, s3Http)
         return CatchAll().then(
                 routes(
                         "/{id}/delete" bind POST to Delete(s3),

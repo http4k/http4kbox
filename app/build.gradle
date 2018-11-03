@@ -1,7 +1,5 @@
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile 'io.github.daviddenton:konfigur8:1.8.0'
-
     compile "org.http4k:http4k-aws:$http4k_version"
     compile "org.http4k:http4k-core:$http4k_version"
     compile "org.http4k:http4k-cloudnative:$http4k_version"
@@ -9,7 +7,6 @@ dependencies {
     compile "org.http4k:http4k-template-handlebars:$http4k_version"
 
     testCompile "org.http4k:http4k-testing-hamkrest:$http4k_version"
-    testCompile "com.natpryce:hamkrest:1.4.2.0"
     testCompile "org.junit.jupiter:junit-jupiter-api:5.2.0"
     testCompile "org.junit.jupiter:junit-jupiter-engine:5.2.0"
     testCompile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
