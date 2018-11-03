@@ -1,0 +1,9 @@
+dependencies {
+    compile project(":app")
+    compile "org.http4k:http4k-server-jetty:$http4k_version"
+}
+
+apply plugin: 'application'
+mainClassName = "http4kbox.K8sServerKt"
+
+task stage(dependsOn: ['installDist'])
