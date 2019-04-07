@@ -14,7 +14,7 @@ import org.http4k.filter.ClientFilters.SetHostFrom
 import org.http4k.server.SunHttp
 import org.http4k.server.asServer
 
-fun main(args: Array<String>) {
+fun main() {
     FakeS3().asServer(SunHttp(9000)).start()
 
     Http4kBox(

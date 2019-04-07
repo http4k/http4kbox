@@ -13,7 +13,7 @@ import org.http4k.server.asServer
 val PROXY_HOST = EnvironmentKey.required("PROXY_HOST")
 val HTTP_PORT = EnvironmentKey.int().required("HTTP_PORT")
 
-fun main(args: Array<String>) {
+fun main() {
 //    System.setProperty("sun.net.http.allowRestrictedHeaders", "true")
 
     val env = Environment.ENV

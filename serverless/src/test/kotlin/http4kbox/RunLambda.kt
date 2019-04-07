@@ -14,7 +14,7 @@ val defaults = mapOf("S3_REGION" to "us-east-1", "AWS_BUCKET" to "http4kbox")
 /**
  * Run this main with the AWS_CREDENTIALS environment variable in the format "<ACCESS_KEY>:<SECRET_KEY>"
  */
-fun main(args: Array<String>) {
+fun main() {
 
     // the following code is purely here for demonstration purposes, to explain exactly what is happening at AWS.
     fun runLambdaAsAwsWould() {

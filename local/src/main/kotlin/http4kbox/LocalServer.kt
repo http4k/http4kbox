@@ -9,7 +9,7 @@ import org.http4k.server.asServer
 
 val HTTP_PORT = EnvironmentKey.int().defaulted("HTTP_PORT", 8000)
 
-fun main(args: Array<String>) {
+fun main() {
     val env = Environment.fromResource("http4kbox.properties")
     Http4kBox(env, JavaHttpClient()).asServer(Undertow(HTTP_PORT(env))).start().block()
 }
