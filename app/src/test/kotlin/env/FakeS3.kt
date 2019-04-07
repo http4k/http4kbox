@@ -24,23 +24,24 @@ class FakeS3 : HttpHandler, MutableMap<S3Key, ByteBuffer> by mutableMapOf() {
     private val content = Body.binary(OCTET_STREAM).map({ it.payload }, { Body(it) }).toLens()
 
     private val app = routes(
-            "/{key}" bind routes(
-                    GET to { req ->
-                        this[s3Key(req)]
-                                ?.let { Response(OK).with(content of it) }
-                                ?: Response(NOT_FOUND)
-                    },
-                    PUT to { req ->
-                        this[s3Key(req)] = content(req)
-                        Response(ACCEPTED)
-                    },
-                    DELETE to { req ->
-                        this.remove(s3Key(req))?.let { Response(ACCEPTED) } ?: Response(NOT_FOUND)
-                    }
-            ),
-            "/" bind GET to {
-                val files = keys.joinToString("") { """<Key>${it.value}</Key>""" }
-                Response(OK).body("<List>$files</List>") }
+        "/{key}" bind routes(
+            GET to { req ->
+                this[s3Key(req)]
+                    ?.let { Response(OK).with(content of it) }
+                    ?: Response(NOT_FOUND)
+            },
+            PUT to { req ->
+                this[s3Key(req)] = content(req)
+                Response(ACCEPTED)
+            },
+            DELETE to { req ->
+                this.remove(s3Key(req))?.let { Response(ACCEPTED) } ?: Response(NOT_FOUND)
+            }
+        ),
+        "/" bind GET to {
+            val files = keys.joinToString("") { """<Key>${it.value}</Key>""" }
+            Response(OK).body("<List>$files</List>")
+        }
     )
 
     override fun invoke(request: Request) = app(request)

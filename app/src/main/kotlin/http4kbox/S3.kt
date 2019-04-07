@@ -4,10 +4,18 @@ import http4kbox.Settings.AWS_BUCKET
 import http4kbox.Settings.AWS_CREDENTIALS
 import http4kbox.Settings.S3_CREDENTIAL_SCOPE
 import org.http4k.cloudnative.env.Environment
-import org.http4k.core.*
+import org.http4k.core.Body
 import org.http4k.core.ContentType.Companion.APPLICATION_XML
-import org.http4k.core.Method.*
+import org.http4k.core.Filter
+import org.http4k.core.HttpHandler
+import org.http4k.core.Method.DELETE
+import org.http4k.core.Method.GET
+import org.http4k.core.Method.PUT
+import org.http4k.core.Request
+import org.http4k.core.Status
 import org.http4k.core.Status.Companion.NOT_FOUND
+import org.http4k.core.Uri
+import org.http4k.core.then
 import org.http4k.filter.AwsAuth
 import org.http4k.filter.ClientFilters
 import org.http4k.lens.string
@@ -45,9 +53,9 @@ class S3(private val aws: HttpHandler) {
         }
 
         fun configured(env: Environment, http: HttpHandler) =
-                S3(SetBucketHost(Uri.of("https://${AWS_BUCKET(env)}.s3.amazonaws.com"))
-                        .then(ClientFilters.AwsAuth(S3_CREDENTIAL_SCOPE(env), AWS_CREDENTIALS(env)))
-                        .then(ensureSuccessful)
-                        .then(http))
+            S3(SetBucketHost(Uri.of("https://${AWS_BUCKET(env)}.s3.amazonaws.com"))
+                .then(ClientFilters.AwsAuth(S3_CREDENTIAL_SCOPE(env), AWS_CREDENTIALS(env)))
+                .then(ensureSuccessful)
+                .then(http))
     }
 }

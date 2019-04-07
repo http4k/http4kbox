@@ -16,6 +16,6 @@ services:
     ports:
       - "10000:10000"
     links:
-       - proxy
+      - proxy
     env_file:
-        - http4kbox.env
+      - http4kbox.env

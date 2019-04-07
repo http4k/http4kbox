@@ -6,14 +6,18 @@ import com.natpryce.hamkrest.equalTo
 import env.FakeS3
 import env.TestSettings
 import http4kbox.Http4kBox
-import org.http4k.core.*
 import org.http4k.core.ContentType.Companion.MultipartFormWithBoundary
 import org.http4k.core.ContentType.Companion.TEXT_PLAIN
+import org.http4k.core.FormFile
 import org.http4k.core.Method.GET
 import org.http4k.core.Method.POST
+import org.http4k.core.MultipartFormBody
+import org.http4k.core.Request
+import org.http4k.core.Response
 import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Status.Companion.OK
 import org.http4k.core.Status.Companion.SEE_OTHER
+import org.http4k.core.with
 import org.http4k.hamkrest.hasBody
 import org.http4k.hamkrest.hasStatus
 import org.http4k.lens.Header.CONTENT_TYPE
@@ -75,8 +79,8 @@ class Http4kboxTest {
         val file = FormFile(name, TEXT_PLAIN, content.byteInputStream())
         val body = MultipartFormBody().plus("file" to file)
         val upload = http4kbox(Request(POST, "/")
-                .with(CONTENT_TYPE of MultipartFormWithBoundary(body.boundary))
-                .body(body))
+            .with(CONTENT_TYPE of MultipartFormWithBoundary(body.boundary))
+            .body(body))
 
         assertThat(upload, hasStatus(SEE_OTHER))
     }

@@ -19,7 +19,7 @@ import org.http4k.core.then
 import org.http4k.filter.DebuggingFilters
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import java.util.*
+import java.util.UUID
 
 abstract class S3Contract(http: HttpHandler, protected val env: Environment) {
 

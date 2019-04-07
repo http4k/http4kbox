@@ -18,8 +18,8 @@ fun main(args: Array<String>) {
     val port = if (args.isNotEmpty()) args[0].toInt() else 5000
 
     BasicAuth("http4k", BASIC_AUTH_CREDENTIALS(env))
-            .then(Http4kBox(env, JavaHttpClient()))
-            .asServer(ApacheServer(port)).start().block()
+        .then(Http4kBox(env, JavaHttpClient()))
+        .asServer(ApacheServer(port)).start().block()
 }
 
 private fun String.toCredentials() = split(":").run { Credentials(get(0), get(1)) }

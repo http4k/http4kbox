@@ -1,14 +1,18 @@
 package http4kbox
 
 import org.http4k.cloudnative.env.Environment
-import org.http4k.core.*
+import org.http4k.core.Body
 import org.http4k.core.ContentType.Companion.OCTET_STREAM
 import org.http4k.core.ContentType.Companion.TEXT_HTML
+import org.http4k.core.HttpHandler
 import org.http4k.core.Method.GET
 import org.http4k.core.Method.POST
+import org.http4k.core.Response
 import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Status.Companion.OK
 import org.http4k.core.Status.Companion.SEE_OTHER
+import org.http4k.core.then
+import org.http4k.core.with
 import org.http4k.filter.ServerFilters.CatchAll
 import org.http4k.lens.Header.CONTENT_TYPE
 import org.http4k.lens.MultipartFormFile
@@ -58,11 +62,11 @@ object Http4kBox {
     operator fun invoke(env: Environment, s3Http: HttpHandler): RoutingHttpHandler {
         val s3 = S3.configured(env, s3Http)
         return CatchAll().then(
-                routes(
-                        "/{id}/delete" bind POST to Delete(s3),
-                        "/{id}" bind GET to Get(s3),
-                        "/" bind routes(POST to Upload(s3), GET to Index(s3))
-                )
+            routes(
+                "/{id}/delete" bind POST to Delete(s3),
+                "/{id}" bind GET to Get(s3),
+                "/" bind routes(POST to Upload(s3), GET to Index(s3))
+            )
         )
     }
 }

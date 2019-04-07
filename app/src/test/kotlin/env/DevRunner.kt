@@ -18,11 +18,11 @@ fun main() {
     FakeS3().asServer(SunHttp(9000)).start()
 
     Http4kBox(
-            Environment.defaults(
-                    AWS_CREDENTIALS of AwsCredentials("accessKey", "secretKey"),
-                    AWS_BUCKET of "localhost",
-                    S3_CREDENTIAL_SCOPE of AwsCredentialScope("us-east-5", "s3")
-            ),
-            SetHostFrom(Uri.of("http://localhost:9000")).then(JavaHttpClient())
+        Environment.defaults(
+            AWS_CREDENTIALS of AwsCredentials("accessKey", "secretKey"),
+            AWS_BUCKET of "localhost",
+            S3_CREDENTIAL_SCOPE of AwsCredentialScope("us-east-5", "s3")
+        ),
+        SetHostFrom(Uri.of("http://localhost:9000")).then(JavaHttpClient())
     ).asServer(SunHttp(8000)).start().block()
 }

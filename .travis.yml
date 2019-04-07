@@ -12,22 +12,22 @@ matrix:
       language: java
       jdk: openjdk11
       script:
-      - "./gradlew -i check"
+        - "./gradlew -i check"
       cache:
         directories:
-        - "$HOME/.m2"
-        - "$HOME/.gradle"
+          - "$HOME/.m2"
+          - "$HOME/.gradle"
       after_success:
         - "./gradlew jacocoRootReport coveralls"
     - stage: local
       language: java
       jdk: openjdk11
       script:
-      - "./gradlew -i clean local:shadowJar"
+        - "./gradlew -i clean local:shadowJar"
       cache:
         directories:
-        - "$HOME/.m2"
-        - "$HOME/.gradle"
+          - "$HOME/.m2"
+          - "$HOME/.gradle"
     - stage: heroku
       language: java
       jdk: openjdk11
@@ -35,8 +35,8 @@ matrix:
         - "./gradlew -i clean heroku:stage && mv heroku/build/install build && cp heroku/Procfile ."
       cache:
         directories:
-        - "$HOME/.m2"
-        - "$HOME/.gradle"
+          - "$HOME/.m2"
+          - "$HOME/.gradle"
       deploy:
         skip_cleanup: true
         provider: heroku
@@ -47,26 +47,26 @@ matrix:
       language: java
       jdk: openjdk11
       script:
-      - "./gradlew -i clean k8s:shadowJar"
+        - "./gradlew -i clean k8s:shadowJar"
       cache:
         directories:
-        - "$HOME/.m2"
-        - "$HOME/.gradle"
+          - "$HOME/.m2"
+          - "$HOME/.gradle"
     - stage: native
       language: java
       jdk: openjdk11
       script:
-      - "./gradlew -i clean native:shadowJar"
+        - "./gradlew -i clean native:shadowJar"
       cache:
         directories:
-        - "$HOME/.m2"
-        - "$HOME/.gradle"
+          - "$HOME/.m2"
+          - "$HOME/.gradle"
     - stage: serverless
       language: java
       jdk: openjdk11
       script:
-      - "./gradlew -i clean serverless:shadowJar"
+        - "./gradlew -i clean serverless:shadowJar"
       cache:
         directories:
-        - "$HOME/.m2"
-        - "$HOME/.gradle"
+          - "$HOME/.m2"
+          - "$HOME/.gradle"
