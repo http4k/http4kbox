@@ -1,6 +1,6 @@
 package http4kbox
 
-import org.http4k.client.JavaHttpClient
+import org.http4k.client.Java8HttpClient
 import org.http4k.cloudnative.env.Environment
 import org.http4k.cloudnative.env.EnvironmentKey
 import org.http4k.core.Credentials
@@ -18,7 +18,7 @@ fun main(args: Array<String>) {
     val port = if (args.isNotEmpty()) args[0].toInt() else 5000
 
     BasicAuth("http4k", BASIC_AUTH_CREDENTIALS(env))
-        .then(Http4kBox(env, JavaHttpClient()))
+        .then(Http4kBox(env, Java8HttpClient()))
         .asServer(ApacheServer(port)).start().block()
 }
 
