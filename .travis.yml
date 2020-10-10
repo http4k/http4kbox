@@ -31,12 +31,6 @@ matrix:
     - stage: heroku
       language: java
       jdk: openjdk11
-      script:
-        - "./gradlew -i clean heroku:stage && mv heroku/build/install build && cp heroku/Procfile ."
-      cache:
-        directories:
-          - "$HOME/.m2"
-          - "$HOME/.gradle"
       deploy:
         skip_cleanup: true
         provider: heroku
