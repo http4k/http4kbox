@@ -1,12 +1,12 @@
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
+import http4kbox.AppLambda
 import http4kbox.Http4kboxLambda
 import org.http4k.client.JavaHttpClient
 import org.http4k.core.Method.GET
 import org.http4k.core.Request
 import org.http4k.server.SunHttp
 import org.http4k.server.asServer
-import org.http4k.serverless.BootstrapAppLoader.HTTP4K_BOOTSTRAP_CLASS
-import org.http4k.serverless.lambda.ApiGatewayProxyRequest
-import org.http4k.serverless.lambda.LambdaFunction
+import java.lang.reflect.Proxy
 
 val defaults = mapOf("S3_REGION" to "us-east-1", "AWS_BUCKET" to "http4kbox")
 
@@ -19,12 +19,12 @@ fun main() {
     fun runLambdaAsAwsWould() {
         defaults.forEach { System.setProperty(it.key, it.value) }
 
-        val lambda = LambdaFunction(mapOf(HTTP4K_BOOTSTRAP_CLASS to Http4kboxLambda::class.java.name))
-        val response = lambda.handle(ApiGatewayProxyRequest().apply {
+        val lambda = AppLambda
+        val response = lambda.handleRequest(APIGatewayProxyRequestEvent().apply {
             path = "/"
             httpMethod = "GET"
             queryStringParameters = mapOf()
-        })
+        }, proxy())
         println(response.statusCode)
         println(response.headers)
         println(response.body)
@@ -37,7 +37,7 @@ fun main() {
         val localLambda = app.asServer(SunHttp(8000)).start()
 
         println(JavaHttpClient()(Request(GET, "http://localhost:8000/")))
-//        localLambda.stop()
+        localLambda.stop()
     }
     runLambdaAsAwsWould()
 
@@ -45,3 +45,5 @@ fun main() {
 
     Thread.currentThread().join()
 }
+
+inline fun <reified T> proxy(): T = Proxy.newProxyInstance(T::class.java.classLoader, arrayOf(T::class.java)) { _, _, _ -> TODO() } as T

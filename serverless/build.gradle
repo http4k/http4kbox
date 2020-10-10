@@ -22,8 +22,12 @@ shadowJar {
 }
 
 dependencies {
-    compile project(":app")
-    compile "org.http4k:http4k-serverless-lambda:$http4k_version"
+    implementation project(":app")
+    implementation "org.http4k:http4k-serverless-lambda"
+    testImplementation platform("org.junit:junit-bom:$junit_version")
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine"
+
 //    testCompile "io.github.s4nchez:deployer:0.1-SNAPSHOT" // <- used by the deployment tasks
 }
 
@@ -32,7 +36,7 @@ task deployLambda(type: JavaExec) {
     environment "DEPLOYMENTSPEC_MODULE", project.name
     environment "DEPLOYMENTSPEC_LAMBDAFILE", "build/libs/serverless.jar"
     environment "DEPLOYMENTSPEC_LAMBDATIMEOUT", "20"
-    environment "DEPLOYMENTSPEC_HANDLERFUNCTION", "org.http4k.serverless.lambda.LambdaFunction::handle"
+    environment "DEPLOYMENTSPEC_HANDLERFUNCTION", "org.http4k.serverless.lambda.LambdaFunction"
     environment "HTTP4K_BOOTSTRAP_CLASS", "http4kbox.Http4kboxLambda"
     environment "CREDENTIALS", "http4kbox:http4kbox"
 
