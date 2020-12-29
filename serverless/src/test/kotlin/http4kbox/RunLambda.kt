@@ -25,9 +25,9 @@ fun main() {
             httpMethod = "GET"
             queryStringParameters = mapOf()
         }, proxy())
-        println(response.statusCode)
-        println(response.headers)
-        println(response.body)
+        println(response["statusCode"])
+        println(response["headers"])
+        println(response["body"])
     }
 
     // Launching your Lambda Function locally as a server - by simply providing the operating ENVIRONMENT map as would
