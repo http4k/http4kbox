@@ -8,7 +8,6 @@ import env.TestSettings
 import http4kbox.Http4kBox
 import org.http4k.core.ContentType.Companion.MultipartFormWithBoundary
 import org.http4k.core.ContentType.Companion.TEXT_PLAIN
-import org.http4k.core.FormFile
 import org.http4k.core.Method.GET
 import org.http4k.core.Method.POST
 import org.http4k.core.MultipartFormBody
@@ -21,6 +20,7 @@ import org.http4k.core.with
 import org.http4k.hamkrest.hasBody
 import org.http4k.hamkrest.hasStatus
 import org.http4k.lens.Header.CONTENT_TYPE
+import org.http4k.lens.MultipartFormFile
 import org.junit.jupiter.api.Test
 
 class Http4kboxTest {
@@ -76,7 +76,7 @@ class Http4kboxTest {
     private fun deleteFile(key: String) = http4kbox(Request(POST, "/$key/delete"))
 
     private fun uploadFile(name: String, content: String) {
-        val file = FormFile(name, TEXT_PLAIN, content.byteInputStream())
+        val file = MultipartFormFile(name, TEXT_PLAIN, content.byteInputStream())
         val body = MultipartFormBody().plus("file" to file)
         val upload = http4kbox(Request(POST, "/")
             .with(CONTENT_TYPE of MultipartFormWithBoundary(body.boundary))
