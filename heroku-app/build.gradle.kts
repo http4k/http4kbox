@@ -7,6 +7,3 @@ application {
     mainClass.set("http4kbox.HerokuServerKt")
 }
 
-tasks.register("stage") {
-    dependsOn("installDist")
-}

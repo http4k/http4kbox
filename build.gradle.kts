@@ -69,3 +69,7 @@ allprojects {
         }
     }
 }
+
+tasks.register("stage") {
+    dependsOn("installDist")
+}
