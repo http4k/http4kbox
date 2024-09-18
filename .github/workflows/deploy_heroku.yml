@@ -1,0 +1,25 @@
+on:
+  push:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.7
+      - name: Setup Java
+        uses: actions/setup-java@v4.3.0
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Build with Gradle
+        run: ./gradlew check
+      - name: Deploy to Heroku
+        uses: AkhileshNS/heroku-deploy@v3.13.15
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: http4kbox
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+
