@@ -73,3 +73,7 @@ allprojects {
 tasks.register("stage") {
     dependsOn("installDist")
 }
+
+dependencies {
+    implementation(project(":heroku-app"))
+}

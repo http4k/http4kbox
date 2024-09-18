@@ -6,7 +6,7 @@ following modes:
 
 1. As a Kotlin function with SunHttp dev server for tests - see [app](./app)
 1. In a deployed local Undertow server + Apache HTTP client - see [local](./local)
-1. To Heroku as a cloud-based Apache server (with Java HTTP client) deployed through a fully CD pipeline run on Travis -
+1. To Heroku as a cloud-based Helidon server (with Helidon client) deployed through a fully CD pipeline run on GitHubActions -
    see [heroku](./heroku-app)
 1. Into a Kubernetes cluster - see [k8s](./k8s)
 1. As a pure Kotlin function deployed in a Serverless environment (AWS Lambda) - see [serverless](./serverless)
