@@ -2,6 +2,4 @@
 
 set -e
 
-../gradlew shadowJar
-
-docker build -t daviddenton/http4kbox-native -t daviddenton/http4kbox .
+../gradlew :native:shadowJar :native:nativeCompile
