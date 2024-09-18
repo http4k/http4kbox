@@ -3,7 +3,7 @@ package http4kbox
 import http4kbox.Settings.AWS_BUCKET
 import http4kbox.Settings.AWS_CREDENTIALS
 import http4kbox.Settings.S3_CREDENTIAL_SCOPE
-import org.http4k.cloudnative.env.Environment
+import org.http4k.config.Environment
 import org.http4k.core.Body
 import org.http4k.core.ContentType.Companion.APPLICATION_XML
 import org.http4k.core.Filter

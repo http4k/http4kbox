@@ -1,8 +1,8 @@
 package http4kbox
 
 import org.http4k.client.Java8HttpClient
-import org.http4k.cloudnative.env.Environment
-import org.http4k.cloudnative.env.EnvironmentKey
+import org.http4k.config.Environment
+import org.http4k.config.EnvironmentKey
 import org.http4k.core.Credentials
 import org.http4k.core.then
 import org.http4k.filter.ServerFilters.BasicAuth

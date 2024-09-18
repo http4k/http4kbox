@@ -3,9 +3,12 @@ package functional
 import com.natpryce.hamkrest.and
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
-import env.FakeS3
 import env.TestSettings
 import http4kbox.Http4kBox
+import http4kbox.Settings.AWS_BUCKET
+import org.http4k.connect.amazon.AWS_REGION
+import org.http4k.connect.amazon.s3.FakeS3
+import org.http4k.connect.amazon.s3.createBucket
 import org.http4k.core.ContentType.Companion.MultipartFormWithBoundary
 import org.http4k.core.ContentType.Companion.TEXT_PLAIN
 import org.http4k.core.Method.GET
@@ -24,7 +27,9 @@ import org.http4k.lens.MultipartFormFile
 import org.junit.jupiter.api.Test
 
 class Http4kboxTest {
-    private val http4kbox = Http4kBox(TestSettings, FakeS3())
+    private val http4kbox = Http4kBox(TestSettings, FakeS3().apply {
+        s3Client().createBucket(TestSettings[AWS_BUCKET], TestSettings[AWS_REGION])
+    })
 
     @Test
     fun `can list files`() {

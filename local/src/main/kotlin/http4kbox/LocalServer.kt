@@ -1,8 +1,8 @@
 package http4kbox
 
 import org.http4k.client.JavaHttpClient
-import org.http4k.cloudnative.env.Environment
-import org.http4k.cloudnative.env.EnvironmentKey
+import org.http4k.config.Environment
+import org.http4k.config.EnvironmentKey
 import org.http4k.lens.int
 import org.http4k.server.Undertow
 import org.http4k.server.asServer

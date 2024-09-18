@@ -1,9 +1,0 @@
-dependencies {
-    compile project(":app")
-    compile "org.http4k:http4k-server-apache:$http4k_version"
-}
-
-apply plugin: 'application'
-mainClassName = "http4kbox.HerokuServerKt"
-
-task stage(dependsOn: ['installDist'])
