@@ -1,3 +1,4 @@
+@args (Iterable<http4kbox.FileName> files)
 <head>
     <title>http4kbox</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
@@ -42,7 +43,7 @@
             aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="https://github.com/daviddenton/http4kbox"><img class="logo" src="https://www.http4k.org/img/octocat-inverted-64.png"></a>
+    <a class="navbar-brand" href="https://github.com/http4k/http4kbox"><img class="logo" src="https://www.http4k.org/img/octocat-inverted-64.png"></a>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto"></ul>
@@ -58,7 +59,7 @@
 </span>
 <div>
     <h2>http4kbox</h2>
-    <p class="text">This is a simple Dropbox clone written using <a href="https://http4k.org">http4k</a>, backed by an
+    <p class="text">This is a simple Dropbox clone written using <a href="https://http4k.org">http4k</a> and  <a href="https://connect.http4k.org">http4k Connect</a>, backed by an
         <a href="https://aws.amazon.com/s3">S3</a> bucket.
     </p>
     <table class="table table-striped">
@@ -69,16 +70,16 @@
         </tr>
         </thead>
         <tbody>
-        {{#files}}
-            <tr>
-                <td><a id="file-{{value}}" href="/{{value}}">{{value}}</a></td>
-                <td>
-                    <form method="POST" action="/{{value}}/delete">
-                        <button>delete</button>
-                    </form>
-                </td>
-            </tr>
-        {{/files}}
+        @for ((file) : files) {
+        <tr>
+            <td><a id="file-@file" href="/@file">@file</a></td>
+            <td>
+                <form method="POST" action="/@file/delete">
+                    <button>delete</button>
+                </form>
+            </td>
+        </tr>
+        }
         </tbody>
     </table>
 </div>

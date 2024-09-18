@@ -7,6 +7,7 @@ plugins {
     java
     application
     id("com.gradleup.shadow") version "8.3.1"
+    id("nu.studer.rocker") version "3.0.4"
 }
 
 buildscript {
@@ -31,6 +32,7 @@ allprojects {
     apply(plugin = "kotlin")
     apply(plugin = "application")
     apply(plugin = "com.gradleup.shadow")
+    apply(plugin = "nu.studer.rocker")
 
     repositories {
         mavenCentral()
