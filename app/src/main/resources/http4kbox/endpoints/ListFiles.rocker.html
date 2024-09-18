@@ -2,6 +2,7 @@
 <http4kbox.FileName> files)
     <head>
         <title>http4kbox</title>
+        <link rel="stylesheet" href="https://www.http4k.org/css/main.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
               integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/min/dropzone.min.css"
@@ -44,18 +45,19 @@
             }
         </style>
     </head>
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+    <nav class="navbar navbar-toggleable-md navbar-inverse  fixed-top primary-color">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                 data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="https://github.com/http4k/http4kbox"><img class="logo" src="https://www.http4k.org/img/octocat-inverted-64.png"></a>
+        <a class="navbar-brand" href="https://http4k.org"><img class="logo" src="https://www.http4k.org/img/logo.png"/></a>
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto"></ul>
-            <div class="error"><a href="https://http4k.org"><img class="logo"
-                                                                 src="https://www.http4k.org/img/logo_1100x200_white_on_black_trans.png"/></a>
+
+            <a  href="https://github.com/http4k/http4kbox"><img class="logo" src="https://www.http4k.org/img/octocat-inverted-64.png"></a>
+            <div class="error">
             </div>
         </div>
     </nav>
@@ -80,7 +82,7 @@
             <tr id="file-@file">
                 <td><a href="/@file" target="_blank">@file</a></td>
                 <td>
-                    <button hx-delete="/@file">delete</button>
+                    <button class="btn btn-warning" hx-delete="/@file">delete</button>
                 </td>
             </tr>
             }

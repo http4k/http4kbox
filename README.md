@@ -12,7 +12,7 @@ following modes:
 1. As a pure Kotlin function deployed in a Serverless environment (AWS Lambda) - see [serverless](./serverless)
 1. As a native Apache server binary running in GraalVM - see [native](./native)
 
-Apart from the switchable server backends and clients, the core app uses the following [**http4k**](https://http4k.org)
+Apart from the switchable server backen   ds and clients, the core app uses the following [**http4k**](https://http4k.org)
 modules and features:
 
 - `http4k-core` <-- main HTTP library
@@ -25,4 +25,4 @@ modules and features:
 
 ## In action:
 
-<img src="https://github.com/daviddenton/http4k-demo-s3box/raw/master/screenshot.png"/>
+<img src="image.png"/>
