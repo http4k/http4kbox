@@ -23,8 +23,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Build
-        run: ./gradlew :heroku:stage
       - name: Deploy to Heroku
         uses: AkhileshNS/heroku-deploy@v3.13.15
         with:
