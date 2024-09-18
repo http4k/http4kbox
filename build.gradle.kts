@@ -77,3 +77,8 @@ tasks.register("stage") {
 dependencies {
     implementation(project(":heroku-app"))
 }
+
+application {
+    mainClass.set("http4kbox.HerokuServerKt")
+}
+
