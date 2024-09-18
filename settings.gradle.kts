@@ -1,7 +1,7 @@
 rootProject.name = "http4kbox"
 
 include("app")
-include("heroku")
+include("heroku-app")
 include("k8s")
 include("local")
 include("serverless")
