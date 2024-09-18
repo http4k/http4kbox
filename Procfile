@@ -1,1 +1,1 @@
-web: build/install/heroku/bin/heroku $PORT
+web: build/install/http4kbox/bin/http4kbox $PORT
