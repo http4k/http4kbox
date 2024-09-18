@@ -31,7 +31,6 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: http4kbox
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          appdir: heroku-app
       - name: Cleanup Gradle Cache
           # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
           # Restoring these files from a GitHub Actions cache might cause problems for future builds.
