@@ -37,9 +37,9 @@ allprojects {
     }
 
     dependencies {
-        api(platform("org.http4k:http4k-bom:${project.properties["http4k_version"]}"))
-        api(platform("org.http4k:http4k-connect-bom:${project.properties["http4k_connect_version"]}"))
-
+        implementation(platform("org.http4k:http4k-bom:${project.properties["http4k_version"]}"))
+        implementation(platform("org.http4k:http4k-connect-bom:${project.properties["http4k_connect_version"]}"))
+        implementation(platform("dev.forkhandles:forkhandles-bom:${project.properties["forkhandles_version"]}"))
         testApi(platform("org.junit:junit-bom:${project.properties["junit_version"]}"))
         testApi("org.http4k:http4k-testing-hamkrest")
         testApi("org.http4k:http4k-connect-amazon-s3-fake")
