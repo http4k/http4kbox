@@ -25,14 +25,13 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Build
         run: ./gradlew :heroku:stage
-      - name: CD
-        run: cd heroku-app
       - name: Deploy to Heroku
         uses: AkhileshNS/heroku-deploy@v3.13.15
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: http4kbox
           heroku_email: ${{secrets.HEROKU_EMAIL}}
+          appdir: heroku-app
       - name: Cleanup Gradle Cache
           # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
           # Restoring these files from a GitHub Actions cache might cause problems for future builds.
