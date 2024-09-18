@@ -18,7 +18,8 @@ modules and features:
 - `http4k-core` <-- main HTTP library
 - `http4k-config` <-- for 12-factor configuration via environmental properties
 - `http4k-connect-amazon-s3` <-- replaces the Java AWS SDK with a lightweight http4k client
-- `http4k-template-handlebars` <-- for templating
+- `http4k-htmx` <-- for HTMX support
+- `http4k-template-rocker` <-- for templating
 - `http4k-multipart` <-- multipart form uploads
 - `http4k-testing-hamkrest` <-- for test assertions
 

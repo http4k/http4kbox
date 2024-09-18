@@ -11,6 +11,7 @@ import org.http4k.connect.amazon.s3.FakeS3
 import org.http4k.connect.amazon.s3.createBucket
 import org.http4k.core.ContentType.Companion.MultipartFormWithBoundary
 import org.http4k.core.ContentType.Companion.TEXT_PLAIN
+import org.http4k.core.Method.DELETE
 import org.http4k.core.Method.GET
 import org.http4k.core.Method.POST
 import org.http4k.core.MultipartFormBody
@@ -20,6 +21,7 @@ import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Status.Companion.OK
 import org.http4k.core.Status.Companion.SEE_OTHER
 import org.http4k.core.with
+import org.http4k.filter.debug
 import org.http4k.hamkrest.hasBody
 import org.http4k.hamkrest.hasStatus
 import org.http4k.lens.Header.CONTENT_TYPE
@@ -29,7 +31,7 @@ import org.junit.jupiter.api.Test
 class Http4kboxTest {
     private val http4kbox = Http4kBox(TestSettings, FakeS3().apply {
         s3Client().createBucket(TestSettings[AWS_BUCKET], TestSettings[AWS_REGION])
-    })
+    }.debug())
 
     @Test
     fun `can list files`() {
@@ -78,7 +80,7 @@ class Http4kboxTest {
 
     private fun getFile(key: String) = http4kbox(Request(GET, "/$key"))
     private fun listFiles() = http4kbox(Request(GET, "/"))
-    private fun deleteFile(key: String) = http4kbox(Request(POST, "/$key/delete"))
+    private fun deleteFile(key: String) = http4kbox(Request(DELETE, "/$key"))
 
     private fun uploadFile(name: String, content: String) {
         val file = MultipartFormFile(name, TEXT_PLAIN, content.byteInputStream())
