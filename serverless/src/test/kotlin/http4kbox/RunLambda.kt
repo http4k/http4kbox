@@ -1,5 +1,6 @@
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
+import dev.forkhandles.mock4k.mock
 import http4kbox.AppLambda
 import http4kbox.Http4kboxLambda
 import org.http4k.client.JavaHttpClient
@@ -9,13 +10,12 @@ import org.http4k.format.AwsLambdaMoshi
 import org.http4k.server.SunHttp
 import org.http4k.server.asServer
 import java.io.ByteArrayOutputStream
-import java.lang.reflect.Proxy
 
 private val defaults = mapOf(
-    "AWS_CREDENTIALS" to "dummy:dummy",
+    "AWS_ACCESS_KEY_ID" to "dummy",
+    "AWS_SECRET_ACCESS_KEY" to "dummy",
     "AWS_BUCKET" to "http4kbox",
     "AWS_REGION" to "us-east-1",
-    "S3_REGION" to "us-east-1"
 )
 
 /**
@@ -32,12 +32,12 @@ fun main() {
             path = "/"
             httpMethod = "GET"
             queryStringParameters = mapOf()
-        }), buffer, proxy())
+        }), buffer, mock())
 
-        val response2 = AwsLambdaMoshi.asA<APIGatewayProxyResponseEvent>(String(buffer.toByteArray()))
-        println(response2.statusCode)
-        println(response2.headers)
-        println(response2.body)
+        val response = AwsLambdaMoshi.asA<APIGatewayProxyResponseEvent>(String(buffer.toByteArray()))
+        println(response.statusCode)
+        println(response.headers)
+        println(response.body)
     }
 
     // Launching your Lambda Function locally as a server - by simply providing the operating ENVIRONMENT map as would
@@ -55,6 +55,3 @@ fun main() {
 
     Thread.currentThread().join()
 }
-
-inline fun <reified T> proxy(): T =
-    Proxy.newProxyInstance(T::class.java.classLoader, arrayOf(T::class.java)) { _, _, _ -> TODO() } as T
