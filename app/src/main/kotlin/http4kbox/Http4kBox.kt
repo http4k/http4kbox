@@ -20,8 +20,8 @@ fun Http4kBox(env: Environment, http: HttpHandler): HttpHandler {
     return CatchAll().then(
         routes(
             htmxWebjars(),
-            "/{id}" bind routes(DELETE to Delete(fs), GET to Get(fs)),
-            "/" bind routes(POST to Upload(fs), GET to Index(fs))
+            "/{id}" bind routes(GET to Get(fs), DELETE to Delete(fs)),
+            "/" bind routes(GET to Index(fs), POST to Upload(fs))
         )
     )
 }
