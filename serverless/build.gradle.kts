@@ -15,7 +15,7 @@ dependencies {
     implementation(project(":app"))
     implementation("org.http4k:http4k-serverless-lambda")
     implementation("dev.forkhandles:mock4k")
-    implementation("com.amazonaws:aws-lambda-java-events:3.14.0")
+    testImplementation("com.amazonaws:aws-lambda-java-events:3.14.0")
 
     // testImplementation("io.github.s4nchez:deployer:0.1-SNAPSHOT") // Uncomment if needed for deployment tasks
 }
