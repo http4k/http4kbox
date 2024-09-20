@@ -20,7 +20,7 @@ fun Http4kBox(env: Environment, http: HttpHandler, clock: Clock): HttpHandler {
     val oAuthProvider = OAuthProvider(
         OAUTH_BASE_URI(env), OAUTH_CALLBACK_URI(env),
         http,
-        InsecureCookieBasedOAuthPersistence(clock.instant().toEpochMilli().toString(), clock = clock),
+        InsecureCookieBasedOAuthPersistence("http4kbox", clock = clock),
         OAUTH_CLIENT(env)
     )
 
