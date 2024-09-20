@@ -4,7 +4,6 @@ dependencies {
     api("org.http4k:http4k-config")
     api("org.http4k:http4k-multipart")
     api("org.http4k:http4k-contract")
-    api("org.http4k:http4k-contract-ui-swagger")
     api("org.http4k:http4k-format-jackson")
     api("org.http4k:http4k-security-oauth")
     api("org.http4k:http4k-template-rocker")
