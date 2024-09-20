@@ -3,6 +3,7 @@ package functional
 import com.natpryce.hamkrest.and
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
+import env.FakeGitHub
 import env.TestSettings
 import http4kbox.Http4kBox
 import http4kbox.Settings.AWS_BUCKET
@@ -19,23 +20,51 @@ import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status.Companion.NOT_FOUND
 import org.http4k.core.Status.Companion.OK
-import org.http4k.core.Status.Companion.SEE_OTHER
+import org.http4k.core.Uri
+import org.http4k.core.then
 import org.http4k.core.with
-import org.http4k.filter.debug
+import org.http4k.filter.ClientFilters
+import org.http4k.filter.RequestFilters
 import org.http4k.hamkrest.hasBody
 import org.http4k.hamkrest.hasStatus
 import org.http4k.lens.Header.CONTENT_TYPE
 import org.http4k.lens.MultipartFormFile
+import org.http4k.routing.reverseProxy
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.time.Clock
 
 class Http4kboxTest {
-    private val http4kbox = Http4kBox(TestSettings, FakeS3().apply {
+
+    private val clock = Clock.systemUTC()
+
+    private val github = FakeGitHub(clock)
+
+    private val s3 = FakeS3().apply {
         s3Client().createBucket(TestSettings[AWS_BUCKET], TestSettings[AWS_REGION])
-    }.debug())
+    }
+
+    private val http4kbox = Http4kBox(TestSettings, reverseProxy("s3" to s3, "github" to github), clock)
+
+    private val client =
+        ClientFilters.SetBaseUriFrom(Uri.of("http://http4kbox"))
+            .then(ClientFilters.FollowRedirects())
+            .then(ClientFilters.Cookies(clock))
+            .then(
+                reverseProxy(
+                    "github" to github,
+                    "http4kbox" to http4kbox
+                )
+            )
+
+    @BeforeEach
+    fun login() {
+        client(Request(GET, "/"))
+    }
 
     @Test
     fun `can list files`() {
-        val list = http4kbox(Request(GET, "/"))
+        val list = client(Request(GET, "/"))
         assertThat(list, hasStatus(OK))
         assertThat(list.countFiles(), equalTo(0))
     }
@@ -74,21 +103,29 @@ class Http4kboxTest {
         assertThat(listFiles().countFiles(), equalTo(0))
     }
 
+    @Test
+    fun `can list files through the API`() {
+        uploadFile("bob.txt", "content")
+        val apiClient = RequestFilters.SetHeader("http4k-api-key", "http4kbox").then(client)
+        assertThat(apiClient(Request(GET, "/api/list")).bodyString(), equalTo("""["bob.txt"]"""))
+    }
 
     private fun Response.countFiles() = bodyString().split("""id="file-""").size - 1
     private fun Response.containsFile(name: String) = bodyString().contains("""id="file-$name""")
 
-    private fun getFile(key: String) = http4kbox(Request(GET, "/$key"))
-    private fun listFiles() = http4kbox(Request(GET, "/"))
-    private fun deleteFile(key: String) = http4kbox(Request(DELETE, "/$key"))
+    private fun getFile(key: String) = client(Request(GET, "/$key"))
+    private fun listFiles() = client(Request(GET, "/"))
+    private fun deleteFile(key: String) = client(Request(DELETE, "/$key"))
 
     private fun uploadFile(name: String, content: String) {
         val file = MultipartFormFile(name, TEXT_PLAIN, content.byteInputStream())
         val body = MultipartFormBody().plus("file" to file)
-        val upload = http4kbox(Request(POST, "/")
-            .with(CONTENT_TYPE of MultipartFormWithBoundary(body.boundary))
-            .body(body))
+        val upload = client(
+            Request(POST, "/")
+                .with(CONTENT_TYPE of MultipartFormWithBoundary(body.boundary))
+                .body(body)
+        )
 
-        assertThat(upload, hasStatus(SEE_OTHER))
+        assertThat(upload, hasStatus(OK))
     }
 }
