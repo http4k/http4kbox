@@ -8,6 +8,7 @@ import org.http4k.core.then
 import org.http4k.filter.ServerFilters.BasicAuth
 import org.http4k.server.Helidon
 import org.http4k.server.asServer
+import java.time.Clock
 
 // since we are running in a public environment, add credentials to the app
 val BASIC_AUTH_CREDENTIALS = EnvironmentKey.map(String::toCredentials).required("BASIC_AUTH_CREDENTIALS")
@@ -18,7 +19,7 @@ fun main(args: Array<String>) {
     val port = if (args.isNotEmpty()) args[0].toInt() else 5000
 
     BasicAuth("http4k", BASIC_AUTH_CREDENTIALS(env))
-        .then(Http4kBox(env, HelidonClient()))
+        .then(Http4kBox(env, HelidonClient(), Clock.systemUTC()))
         .asServer(Helidon(port)).start().block()
 }
 

@@ -6,9 +6,10 @@ import org.http4k.config.EnvironmentKey
 import org.http4k.lens.int
 import org.http4k.server.ApacheServer
 import org.http4k.server.asServer
+import java.time.Clock
 
 val HTTP_PORT = EnvironmentKey.int().required("HTTP_PORT")
 
 fun main() {
-    Http4kBox(ENV, Java8HttpClient()).asServer(ApacheServer(HTTP_PORT(ENV))).start().block()
+    Http4kBox(ENV, Java8HttpClient(), Clock.systemUTC()).asServer(ApacheServer(HTTP_PORT(ENV))).start().block()
 }
